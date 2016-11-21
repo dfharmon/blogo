@@ -21,6 +21,10 @@ Blogo.configure do |config|
   # Do not change this once you installed and ran migrations
   config.table_name_prefix = 'blogo_'
 
+  # if you want to use paperclip to upload images in ckeditor (good for s3, etc).
+  # Hero images will always use paperclip
+  config.use_paperclip = false
+
   # Set disqus shortname if you want to your users to have ability to comment
   # your posts.
   #

@@ -16,6 +16,7 @@ module Blogo
     attr_accessor :github_username
     attr_accessor :show_rss_icon
     attr_accessor :google_analytics_id
+    attr_accessor :use_paperclip
 
     attr_accessor :use_ckeditor
 
@@ -31,6 +32,7 @@ module Blogo
       @recent_posts        = 5
       @disqus_shortname    = nil
       @google_analytics_id = nil
+      @use_paperclip       = false
       @use_ckeditor        = true
       @keywords            = %w(blog)
       @markup_lang         = :html

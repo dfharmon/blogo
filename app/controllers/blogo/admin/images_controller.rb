@@ -12,28 +12,30 @@ module Blogo::Admin
     #
     # Upload image.
     def create
-      upload_io = params[:upload]
-
-      image_name = upload_io.original_filename
-      file_path = Rails.root.join('public', image_directory, image_name)
-
-      if File.exist?(file_path)
-        @error = I18n.translate('blogo.admin.image_already_exists', image_name: image_name)
+      if Blogo.config.use_paperclip
+        image = Blogo::Image.create(image: params[:upload])
+        @image_path = image.image.url
       else
-        dir = File.dirname(file_path)
-        FileUtils.mkdir_p(dir) unless File.exist?(dir)
-        File.binwrite(file_path, upload_io.read)
-      end
+        upload_io = params[:upload]
 
-      @image_path = File.join('/', image_directory, image_name)
+        image_name = upload_io.original_filename
+        file_path = Rails.root.join('public', image_directory, image_name)
+
+        if File.exist?(file_path)
+          @error = I18n.translate('blogo.admin.image_already_exists', image_name: image_name)
+        else
+          dir = File.dirname(file_path)
+          FileUtils.mkdir_p(dir) unless File.exist?(dir)
+          File.binwrite(file_path, upload_io.read)
+        end
+
+        @image_path = File.join('/', image_directory, image_name)
+      end
     end
 
 
     private
 
-    # Image directory with year/month subdirectories.
-    #
-    # @return [String]
     def image_directory
       @image_directory ||= begin
         date_dir = Time.zone.now.strftime('%Y/%m')

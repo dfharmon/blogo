@@ -8,7 +8,7 @@ require 'blogo/routes'
 
 require 'blogo/renderer'
 require 'blogo/paginator'
-
+require 'paperclip'
 
 module Blogo
   mattr_accessor :config

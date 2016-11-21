@@ -11,6 +11,7 @@ module Blogo::Admin
     #
     def new
       @post = Blogo::Post.new(published: true)
+      @post.build_image
     end
 
     # POST /admin/posts
@@ -32,6 +33,7 @@ module Blogo::Admin
     #
     def edit
       @post = Blogo::Post.where(permalink: params[:id]).first!
+      @post.build_image unless @post.image.present?
     end
 
     # PATCH /admin/posts/:id
@@ -76,7 +78,7 @@ module Blogo::Admin
     #
     # @return [Hash]
     def post_params
-      params.require(:post).permit(:title, :permalink, :published_at, :raw_content, :published, :tags_string)
+      params.require(:post).permit(:title, :permalink, :published_at, :raw_content, :published, :tags_string, image_attributes: [:image])
     end
   end
 end

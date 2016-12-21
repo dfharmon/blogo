@@ -32,6 +32,13 @@ class Blogo::Post < ActiveRecord::Base
     end
   end
 
+  def get_meta_image(version = nil)
+    if self.image.present?
+      self.image.image.url(version)
+    else
+      self.meta_image
+    end
+  end
 
   def to_param
     permalink
@@ -67,4 +74,6 @@ class Blogo::Post < ActiveRecord::Base
       end
     end
   end
+
+
 end

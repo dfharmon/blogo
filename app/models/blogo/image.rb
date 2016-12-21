@@ -6,6 +6,6 @@ class Blogo::Image < ActiveRecord::Base
 
   # When first created the url needs to be saved to the post
   after_create do
-    self.post.update(meta_image: self.image.url) if self.post
+    self.post.update(meta_image: self.image.url(:xlarge)) if self.post
   end
 end
